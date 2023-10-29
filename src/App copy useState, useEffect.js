@@ -1,5 +1,5 @@
 // parent
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Testing from "./components/Testing";
 import Naikkan from "./components/Naikkan";
 
@@ -8,11 +8,16 @@ function App() {
 
   const [getName, setName] = useState("Pengadaan Komputer");
 
-  const inputNameRef = useRef(getName); // useRef() digunakan untuk mengambil value dari input (best practice)
+  const [getNewName, setNewName] = useState("");
+
+  const handleInput = (e) => {
+    setNewName(e.target.value);
+  };
+  // handleInput dipasang diinput di Naikkan.js
 
   useEffect(() => {
     if (getLimit > 10) {
-      setName(inputNameRef.current.value);
+      setName(getNewName);
     } else {
       setName("Pengadaan Komputer");
     }
@@ -29,14 +34,14 @@ function App() {
 
   return (
     <>
-      <h1 className="items-center justify-center my-10 text-2xl text-center">
+      <h1 className="text-2xl items-center justify-center text-center my-10">
         {getLimit} M Dollar
       </h1>
       <Naikkan
         naikkanLimit={naikkanLimit}
         turunkanLimit={turunkanLimit}
         getName={getName}
-        inputNameRef={inputNameRef}
+        handleInput={handleInput}
       />
       <Testing />
     </>
